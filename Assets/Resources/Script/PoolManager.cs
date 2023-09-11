@@ -5,79 +5,51 @@ using UnityEngine.Pool;
 
 public class PoolManager : MonoBehaviour
 {
+    //public static PoolManager instance;
 
+    //GameObject bulletPrefab;
 
-//{
-//    public static PoolManager Instance;
+    //private IObjectPool<Bullet> bulletPool;
 
-//    GameObject bulletPrefab;
+    //private void Awake()
+    //{
+    //    if (instance == null)
+    //        instance = this;
+    //    else
+    //        Destroy(this.gameObject);
 
-//    public IObjectPool<GameObject> bulletpool { get; private set; }
+    //    bulletPrefab = Resources.Load<GameObject>("Prefabs/bullet");
 
+    //    bulletPool = new ObjectPool<Bullet>(
+    //        CreateBullet,
+    //        OnGet,
+    //        OnRelease,
+    //        OnDestroyy,
+    //        maxSize: 10
+    //        );
+    //}
 
-//    int defCapacity = 10;
-//    int maxSize = 15;
+    //private Bullet CreateBullet()
+    //{
+    //    Bullet bullet = Instantiate( bulletPrefab ).GetComponent<Bullet>();
+    //    bullet.SetManagedPool(bulletPool);
+    //    return bullet;
+    //}
 
-//    void Awake()
-//    {
-//        bulletPrefab = Resources.Load<GameObject>("Prefabs/bullet");
-//        if (Instance == null)
-//        {
-//            Instance = this;
-//        }
-//        else
-//        {
-//            Destroy(this.gameObject);
-//        }
+    //private void OnGet(Bullet bullet)
+    //{
+    //    bullet.gameObject.SetActive(true);
+    //}
 
-//        bulletpool = new ObjectPool<GameObject>(
-//            OnCreate,
-//            OnGet,
-//            OnRelease,
-//            OnDestroyer,
-//            true,
-//            defCapacity,
-//            maxSize
-//            );
+    //private void OnRelease(Bullet bullet)
+    //{
+    //    bullet.gameObject.SetActive(true);
+    //}
 
-
-//        // 미리 오브젝트 생성 해놓기   미리 만든 크레이트 후 릴리스로 액티브 비활성으로 한다
-//        for (int i = 0; i < defCapacity; i++)
-//        {
-//            Bullet bullet = OnCreate().GetComponent<Bullet>();
-//            bullet.bulletPool.Release(bullet.gameObject);
-//        }
-//    }
-
-
-
-//    GameObject OnCreate()
-//    {
-//        GameObject poolGo = Instantiate(bulletPrefab);
-//        poolGo.GetComponent<Bullet>().bulletPool = this.bulletpool;
-//        return poolGo;
-//    }
-
-
-//    void OnGet(GameObject poolGo)
-//    {
-//        poolGo.SetActive(true);
-//    }
-
-//    void OnRelease(GameObject poolGo) 
-//    {
-//        poolGo.SetActive(false);
-//    }
-
-//    private void OnDestroyer(GameObject poolGo)
-//    {
-//        Invoke("OnDestroy", 1f);
-//    }
-
-//    private void OnDestroy()
-//    {
-//        Destroy(this.gameObject);
-//    }
+    //private void OnDestroyy(Bullet bullet)
+    //{
+    //    Destroy(bullet.gameObject);
+    //}
 
     // Start is called before the first frame update
     void Start()

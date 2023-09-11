@@ -495,6 +495,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: warn_line
       objectReference: {fileID: 0}
+    - target: {fileID: 6925713438687776844, guid: 99fe2d80dc46ffd46b281959f6173e92, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

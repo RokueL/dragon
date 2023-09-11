@@ -20,8 +20,8 @@ public class warnMark : MonoBehaviour
     {
         while(!check)
         {
-            fadeSpeed -= 0.1f;
-            yield return new WaitForSeconds(0.5f);
+            fadeSpeed -= 0.2f;
+            yield return new WaitForSeconds(0.01f);
             spriteRenderer.color = new Color(255, 255, 255, fadeSpeed);
             if(fadeSpeed <= 0f )
             {

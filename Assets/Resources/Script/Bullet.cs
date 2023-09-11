@@ -10,6 +10,7 @@ public class Bullet : MonoBehaviour
 
     Rigidbody2D rb;
 
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -26,6 +27,7 @@ public class Bullet : MonoBehaviour
     {
         rb.velocity = Vector3.up * stats.Speed;
     }
+
 
     // Update is called once per frame
     void Update()

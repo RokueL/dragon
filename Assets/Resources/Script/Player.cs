@@ -8,7 +8,6 @@ public class Player : MonoBehaviour
 {
     Stats stats = new Stats();
 
-
     float h, delayTime;
 
     Vector3 nowPos, movePos;
@@ -32,6 +31,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         bulletPrefab = Resources.Load<GameObject>("Prefabs/bullet");
+        Debug.Log(bulletPrefab.name);
         fireReady = true;
         delayTime = 0.05f;
         Setup();
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
     {
         if (fireReady == true)
         {
-            var bullet = Instantiate(bulletPrefab,FirePos.transform.position,FirePos.transform.rotation);
+            var bullet = Instantiate(bulletPrefab, FirePos.transform.position, FirePos.transform.rotation);
             StartCoroutine(FireDelay());
         }
     }
