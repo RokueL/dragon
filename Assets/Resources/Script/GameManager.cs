@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+
     IEnumerator SpawnEnemies()
     {
         spawnReady = false;
@@ -43,40 +45,15 @@ public class GameManager : MonoBehaviour
             Rigidbody2D rb2 = enemy.GetComponent<Rigidbody2D>();
             EnemyController enemyLogic = enemy.GetComponent<EnemyController>();
 
-            //이거 왜 작동 안하지...? 밑으로 내려 보내야 하는데.....
+            //얏호 다시 작동한다
             rb2.velocity = new Vector2(0, enemyLogic.stats.Speed * (-1));
             StartCoroutine(SpawnEnemies());
         }
     }
 
+    #region METEOR
 
-    IEnumerator MeteorReady()
-    {
-        int ranSpawn = Random.Range(0, 4);
-        var meteor_Line = Instantiate(meteorLine, 
-            (SpawnPoint[ranSpawn].transform.position + new Vector3(0, -5.5f, 0)),
-            SpawnPoint[ranSpawn].transform.rotation);
-        yield return new WaitForSeconds(3f);
-        MeteorShot(meteor_Line.transform);
-        Destroy(meteor_Line);
-    }
-
-    IEnumerator MeteorCoolTime()
-    {
-        meteorReady = false;
-        yield return new WaitForSeconds(4f);
-        meteorReady = true;
-    }
-
-    public void MeteorShot(Transform spawn)
-    {
-        //메테오에 떨어지는 스크립트 있음
-        var meteor = Instantiate(meteorPrefab,
-            (spawn.transform.position + new Vector3 (0, 5.5f, 0))
-            ,spawn.transform.rotation);
-    }
-
-    void MeteorSpawn()
+    void MeteorSpawn() //메테오 루트.1
     {
         if (meteorReady == true)
         {
@@ -85,9 +62,38 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    IEnumerator MeteorReady() // 메테오 루트.2
+    {
+        //랜덤 위치 스폰
+        int ranSpawn = Random.Range(0, 4); 
+        var meteor_Line = Instantiate(meteorLine, 
+            (SpawnPoint[ranSpawn].transform.position + new Vector3(0, -5.5f, 0)),
+            SpawnPoint[ranSpawn].transform.rotation);
+        yield return new WaitForSeconds(2f);
+        //2초후 메테오 소환 후 라인은 그대로 파괴
+        MeteorShot(meteor_Line.transform);
+        Destroy(meteor_Line);
+    }
 
 
 
+    public void MeteorShot(Transform spawn) //메테오 루트.3
+    {
+        //메테오에 떨어지는 스크립트 있음
+        var meteor = Instantiate(meteorPrefab,
+            (spawn.transform.position + new Vector3 (0, 5.5f, 0))
+            ,spawn.transform.rotation);
+    }
+
+
+    IEnumerator MeteorCoolTime() //메테오 루트.4
+    {
+        meteorReady = false;
+        yield return new WaitForSeconds(4f);
+        meteorReady = true;
+    }
+
+    #endregion
 
 
     // Start is called before the first frame update
@@ -96,7 +102,7 @@ public class GameManager : MonoBehaviour
         meteorLine = Resources.Load<GameObject>("Prefabs/warn_line");
         meteorPrefab = Resources.Load<GameObject>("Prefabs/meteor");
         spawnReady = true;
-        meteorReady = true;
+        StartCoroutine(MeteorCoolTime() );
     }
 
 

@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     void Setup()
     {
         stats.HP = 100f;
-        stats.Speed = 3f;
+        stats.Speed = 4f;
         stats.Damage = 10f;
 
         Debug.Log("HP = " + stats.HP);
@@ -89,6 +89,15 @@ public class Player : MonoBehaviour
 
     }
 
+    void OnHit(float dmg)
+    {
+        stats.HP -= dmg;
+        if(stats.HP <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Board")
@@ -104,13 +113,11 @@ public class Player : MonoBehaviour
             }
         }
 
-        if(collision.gameObject.tag == "Enemy")
+        if(collision.gameObject.tag == "Meteor")
         {
-            switch(collision.gameObject.name)
-            {
-                case "meteor":
-                    break;
-            }
+            meteor meteo = collision.GetComponent<meteor>();
+            OnHit(meteo.stats.Damage);
+            Debug.Log("HIT");
         }
     }
 

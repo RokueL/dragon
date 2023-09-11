@@ -1,22 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Datas;
 
 public class meteor : MonoBehaviour
 {
-    float moveSpeed = 5f;
+    public Stats stats = new Stats();
 
     Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
+        stats.Speed = 10f;
+        stats.Damage = 20f;
+
         rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        rb.velocity = Vector3.down * moveSpeed;
+        rb.velocity = Vector3.down * stats.Speed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

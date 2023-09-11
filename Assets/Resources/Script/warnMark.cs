@@ -5,42 +5,48 @@ using UnityEngine;
 public class warnMark : MonoBehaviour
 {
     SpriteRenderer spriteRenderer;
-    
+
+    float fadeSpeed = 1f;
+    bool check;
+
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        StartCoroutine(warning_INOUT());
     }
 
-    IEnumerator warning_IN()
+    IEnumerator warning_INOUT()
     {
-        float fadeInTime = 0f;
-        while (fadeInTime < 1f)
+        while(!check)
         {
-            fadeInTime += 0.1f * Time.deltaTime;
-            yield return new WaitForSeconds(0.1f);
-            spriteRenderer.color = new Color(255, 255, 255, fadeInTime);
+            fadeSpeed -= 0.1f;
+            yield return new WaitForSeconds(0.5f);
+            spriteRenderer.color = new Color(255, 255, 255, fadeSpeed);
+            if(fadeSpeed <= 0f )
+            {
+                check = true;
+            }
         }
-        StartCoroutine(warning_OUT());
+        while (check)
+        {
+            fadeSpeed += 0.1f;
+            yield return new WaitForSeconds(0.5f);
+
+            spriteRenderer.color = new Color(255, 255, 255, fadeSpeed);
+            if (fadeSpeed >= 1f)
+            {
+                check = false;
+            }
+        }
     }
 
-    IEnumerator warning_OUT()
-    {
-        float fadeInTime = 1f;
-        while (fadeInTime < 0f)
-        {
-            fadeInTime -= 0.1f * Time.deltaTime;
-            yield return new WaitForSeconds(0.1f);
-            spriteRenderer.color = new Color(255, 255, 255, fadeInTime);
-        }
-    }
 
 
 
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine(warning_IN());
 
     }
 }
