@@ -25,9 +25,14 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
 
+    #region LOBBY
+
+    #endregion
 
     #region MAINGAME
     //=======================<   ENEMYSPAWN       >=====================
@@ -87,8 +92,14 @@ public class GameManager : MonoBehaviour
         meteorReady = true;
     }
     //==================================================================
+    public void spawnPointSet()
+    {
+        for(int i = 0; i < SpawnPoint.Length; i++)
+        {
+            SpawnPoint[i] = GameObject.Find("SpawnPoint" + i);
+        }
+    }
     #endregion
-
 
     // Start is called before the first frame update
     void Start()
@@ -108,9 +119,9 @@ public class GameManager : MonoBehaviour
         {
             case "FirstScene":
                 break;
-            case "LoadingScene":
+            case "LobbyScene":
                 break;
-            case "MainScene":
+            case "GameScene":
                 EnemySpawn();
                 MeteorSpawn();
                 break;

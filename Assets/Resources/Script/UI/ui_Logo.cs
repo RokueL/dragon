@@ -10,6 +10,7 @@ public class ui_Logo : MonoBehaviour
     float direction = 1;
     public float moveSpeed = 0.1f;
 
+
     // Start is called before the first frame update
     void Start()
     {
