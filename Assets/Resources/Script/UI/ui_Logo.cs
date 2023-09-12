@@ -5,18 +5,18 @@ using UnityEngine;
 public class ui_Logo : MonoBehaviour
 {
 
-    Vector2 nowPos, updown;
+    float y;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        y = transform.position.y;
     }
 
     // Update is called once per frame
     void Update()
     {
-        UIManager.Instance.UI_Float(this.gameObject, 1f);
+        UIManager.Instance.UI_Float(this.gameObject,y, 1f);
     }
 }
 
