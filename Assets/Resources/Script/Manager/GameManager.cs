@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,13 +29,14 @@ public class GameManager : MonoBehaviour
 
 
 
+    #region MAINGAME
+    //=======================<   ENEMYSPAWN       >=====================
     IEnumerator SpawnEnemies()
     {
         spawnReady = false;
         yield return new WaitForSeconds(1f);
         spawnReady = true;
     }
-
     void EnemySpawn()
     {
         if (spawnReady)
@@ -50,9 +52,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(SpawnEnemies());
         }
     }
-
-    #region METEOR
-
+    //=======================<   METEOR       >=========================
     void MeteorSpawn() //메테오 루트.1
     {
         if (meteorReady == true)
@@ -61,7 +61,6 @@ public class GameManager : MonoBehaviour
             StartCoroutine(MeteorCoolTime());
         }
     }
-
     IEnumerator MeteorReady() // 메테오 루트.2
     {
         //랜덤 위치 스폰
@@ -74,9 +73,6 @@ public class GameManager : MonoBehaviour
         MeteorShot(meteor_Line.transform);
         Destroy(meteor_Line);
     }
-
-
-
     public void MeteorShot(Transform spawn) //메테오 루트.3
     {
         //메테오에 떨어지는 스크립트 있음
@@ -84,15 +80,13 @@ public class GameManager : MonoBehaviour
             (spawn.transform.position + new Vector3 (0, 5.5f, 0))
             ,spawn.transform.rotation);
     }
-
-
     IEnumerator MeteorCoolTime() //메테오 루트.4
     {
         meteorReady = false;
         yield return new WaitForSeconds(4f);
         meteorReady = true;
     }
-
+    //==================================================================
     #endregion
 
 
@@ -110,7 +104,17 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        EnemySpawn();
-        MeteorSpawn();
+        switch(SceneManager.GetActiveScene().name) 
+        {
+            case "FirstScene":
+                break;
+            case "LoadingScene":
+                break;
+            case "MainScene":
+                EnemySpawn();
+                MeteorSpawn();
+                break;
+        }
+
     }
 }
