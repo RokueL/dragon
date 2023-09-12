@@ -5,18 +5,37 @@ using UnityEngine;
 public class ui_Logo : MonoBehaviour
 {
 
-    float y;
+    float originPos;
+    float min, max;
+    float direction = 1;
+    public float moveSpeed = 0.1f;
 
     // Start is called before the first frame update
     void Start()
     {
-        y = transform.position.y;
+        originPos = transform.position.y;
+        min = originPos - 0.1f;
+        max = originPos + 0.1f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        UIManager.Instance.UI_Float(this.gameObject,y, 1f);
+        Vector3 tr = transform.position;
+
+        if (tr.y <= min)
+        {
+            direction = 1;
+            //Debug.Log(tr.y);
+        }
+        else if (tr.y >= max)
+        {
+            direction = -1;
+            //Debug.Log (tr.y);
+        }
+
+        tr.y += direction * moveSpeed * Time.deltaTime;
+        transform.position = tr;
     }
 }
 
