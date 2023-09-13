@@ -93,7 +93,8 @@ public class sceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        loginButton.onClick.AddListener(LoadLobbyScene);
+        if(SceneManager.GetActiveScene().name == "FirstScene")
+            BloginButton.onClick.AddListener(LoadLobbyScene);
     }
 
     // Update is called once per frame

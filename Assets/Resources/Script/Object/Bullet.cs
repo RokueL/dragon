@@ -35,11 +35,8 @@ public class Bullet : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnBecameInvisible()
     {
-        if(collision.gameObject.tag == "Board")
-        {
-            Destroy(this.gameObject);
-        }
+        Destroy(this.gameObject);
     }
 }

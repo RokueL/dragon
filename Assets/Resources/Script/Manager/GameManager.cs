@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
         MeteorShot(meteor_Line.transform);
         Destroy(meteor_Line);
     }
-    public void MeteorShot(Transform spawn) //메테오 루트.3
+    private void MeteorShot(Transform spawn) //메테오 루트.3
     {
         //메테오에 떨어지는 스크립트 있음
         var meteor = Instantiate(meteorPrefab,
@@ -92,6 +92,7 @@ public class GameManager : MonoBehaviour
         meteorReady = true;
     }
     //==================================================================
+    //게임씬에서 스폰포인트 셋업
     public void spawnPointSet()
     {
         for(int i = 0; i < SpawnPoint.Length; i++)
