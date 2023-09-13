@@ -7,6 +7,8 @@ using TMPro;
 
 public class sceneManager : MonoBehaviour
 {
+    public static sceneManager Instance;
+
     public GameObject loadCircle;
     public GameObject logoCharacter;
 
@@ -25,6 +27,11 @@ public class sceneManager : MonoBehaviour
         StartCoroutine(LoadAsynSceneCoroutine("LobbyScene"));
     }
 
+    public void LoadGameScene()
+    {
+        StartCoroutine(LoadAsynSceneCoroutine("GameScene"));
+    }
+
     IEnumerator LoadAsynSceneCoroutine(string sceneName)
     {
         yield return null;
@@ -32,19 +39,55 @@ public class sceneManager : MonoBehaviour
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
         operation.allowSceneActivation = false;
 
-        while(!operation.isDone) 
+        switch (sceneName) {
+            case "LobbyScene" :
+                while (!operation.isDone)
+                {
+                    time += Time.deltaTime;
+
+                    progressText.text = "로딩중... ( " + (operation.progress * 100) + " / 100 )";
+
+                    if (operation.progress >= 0.9f && time >= 3f)
+                    {
+                        operation.allowSceneActivation = true;
+                    }
+
+                    yield return null;
+                }
+                break;
+            case "GameScene":
+
+                while (!operation.isDone)
+                {
+                    time += Time.deltaTime;
+
+                    if (operation.progress >= 0.9f && time >= 3f)
+                    {
+                        operation.allowSceneActivation = true;
+                    }
+
+                    yield return null;
+                }
+                break;
+    }
+    }
+
+    private void Awake()
+    {
+        if(Instance == null)
         {
-            time += Time.deltaTime;
-
-            progressText.text = "로딩중... ( " + (operation.progress * 100) + " / 100 )";
-
-            if(operation.progress >= 0.9f && time >= 3f)
-            {
-                operation.allowSceneActivation = true;
-            }
-
-            yield return null;
+            Instance = this;
         }
+        else
+        {
+            Destroy(this);
+        }
+        DontDestroyOnLoad(this);
+    }
+
+    public void GameButtonSetup(Button button)
+    {
+        button.onClick.AddListener(LoadGameScene);
     }
 
     // Start is called before the first frame update
