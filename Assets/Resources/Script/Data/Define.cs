@@ -13,5 +13,12 @@ namespace SceneType
             Game
         }
         public SceneType sceneType;
+
+        public enum Pattern
+        {
+            EnemySpawn,
+            MeteorRain
+        }
+        public Pattern pattern;
     }
 }

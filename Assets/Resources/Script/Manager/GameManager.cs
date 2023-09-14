@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using SceneType;
+using System.Drawing;
+using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    Define.Pattern define = new Define.Pattern();
 
     GameObject meteorLine, meteorPrefab;
 
@@ -13,7 +18,7 @@ public class GameManager : MonoBehaviour
     float spawnTime;
     float gameTime;
 
-    bool spawnReady, meteorReady;
+    bool spawnReady, meteorReady, rainReady;
     public bool gameReady;
 
     public GameObject[] Enemies = new GameObject[2];
@@ -40,15 +45,18 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region MAINGAME
+    //=======================<   METEOREVENT       >=====================
+
+
+
     //=======================<   ENEMYSPAWN       >=====================
-    IEnumerator SpawnCoolTime()
+    IEnumerator SpawnCoolTime()                //스폰 쿨타임
     {
         spawnReady = false;
         yield return new WaitForSeconds(3f);
         spawnReady = true;
     }
-
-    void spawn(int enemytype, int point)
+    void spawn(int enemytype, int point)       // 적 타입 과 스폰 지점을 받아오는 함수
     {
         GameObject enemy = Instantiate(Enemies[enemytype], 
             SpawnPoint[point].transform.position, SpawnPoint[point].transform.rotation);
@@ -56,13 +64,12 @@ public class GameManager : MonoBehaviour
         EnemyController enemyLogic = enemy.GetComponent<EnemyController>();
         rb2.velocity = new Vector2(0, (enemyLogic.stats.Speed + gameSpeed) * (-1));
     }
-
-    void EnemySpawn()
+    void EnemySpawn()                          // 스폰 준비가 되면 랜덤 포인트 한 곳 제외 일반 드래곤 소환
     {
-        if (spawnReady)
+        if (spawnReady && gameTime >= 4f)
         {
             int ranSpawn = Random.Range(0, 4);
-            for(int i = 0; i < 4; i++)
+            for(int i = 0; i < SpawnPoint.Length; i++)
             {
                 if (i != ranSpawn)
                 {
@@ -77,7 +84,7 @@ public class GameManager : MonoBehaviour
         }
     }
     //=======================<   METEOR       >=========================
-    void MeteorSpawn() //메테오 루트.1 ------- 코루틴 호출
+    void MeteorSpawn()                        //메테오 루트.1 ------- 코루틴 호출
     {
         if (meteorReady == true && gameTime >= 15f)
         {
@@ -85,7 +92,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(MeteorCoolTime());
         }
     }
-    IEnumerator MeteorReady() // 메테오 루트.2 ------ 경고선 소환
+    IEnumerator MeteorReady()                 // 메테오 루트.2 ------ 경고선 소환
     {
         //랜덤 위치 스폰
         int ranSpawn = Random.Range(0, 4); 
@@ -97,28 +104,57 @@ public class GameManager : MonoBehaviour
         MeteorShot(meteor_Line.transform);
         Destroy(meteor_Line);
     }
-    private void MeteorShot(Transform spawn) //메테오 루트.3 -----메테오 소환
+    private void MeteorShot(Transform spawn)  //메테오 루트.3 -----메테오 소환
     {
         //메테오에 떨어지는 스크립트 있음
         var meteor = Instantiate(meteorPrefab,
             (spawn.transform.position + new Vector3 (0, 5.5f, 0))
             ,spawn.transform.rotation);
     }
-    IEnumerator MeteorCoolTime() //메테오 루트.4  -----쿨타임
+    IEnumerator MeteorCoolTime()              //메테오 루트.4  -----쿨타임
     {
         meteorReady = false;
         yield return new WaitForSeconds(6f);
         meteorReady = true;
     }
     //==================================================================
-    //게임씬에서 스폰포인트 셋업
-    public void spawnPointSet()
+    public void spawnPointSet()               //게임씬에서 스폰포인트 셋업
     {
         for(int i = 0; i < SpawnPoint.Length; i++)
         {
             SpawnPoint[i] = GameObject.Find("SpawnPoint" + i);
         }
     }
+    IEnumerator RotationPattern()             //게임 패턴 로테이션
+    {
+        while (gameReady)
+        {
+            yield return new WaitForSeconds(10f);
+            int ran = Random.Range(0, 2);
+            define = (Define.Pattern)ran;
+            if(define.ToString() == "MeteorRain")
+            {
+                rainReady = true;
+            }
+        }
+        yield return null;
+    }
+
+    void GameLogic()                          //패턴에 따른 이벤트
+    {
+        StartCoroutine(RotationPattern());
+        Debug.Log(define.ToString());
+        switch (define.ToString())
+        {
+            case "EnemySpawn":
+                EnemySpawn();
+                MeteorSpawn();
+                break;
+            case "MeteorRain":
+                
+                break;
+        }
+    }                   
     #endregion
 
     // Start is called before the first frame update
@@ -126,8 +162,9 @@ public class GameManager : MonoBehaviour
     {
         meteorLine = Resources.Load<GameObject>("Prefabs/object/warn_line");
         meteorPrefab = Resources.Load<GameObject>("Prefabs/object/meteor");
+        
         spawnReady = true;
-        StartCoroutine(MeteorCoolTime() );
+        StartCoroutine(MeteorCoolTime());
     }
 
 
@@ -144,8 +181,7 @@ public class GameManager : MonoBehaviour
             case "Game":
                 if (gameReady)
                 {
-                    EnemySpawn();
-                    MeteorSpawn();
+                    GameLogic();
                     gameSpeed += 0.05f * Time.deltaTime;
                     gameTime += Time.deltaTime;
                 }
