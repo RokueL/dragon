@@ -513,6 +513,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: '@Manager'
       objectReference: {fileID: 0}
+    - target: {fileID: 5661342656881069901, guid: b79f655a30cad044e8c18d560dfe2dbb, type: 3}
+      propertyPath: Enemies.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5661342656881069901, guid: b79f655a30cad044e8c18d560dfe2dbb, type: 3}
+      propertyPath: Enemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 6554138074779873235, guid: 797d4f373ebab6240af9a509e0222f3c, type: 3}
+    - target: {fileID: 5661342656881069901, guid: b79f655a30cad044e8c18d560dfe2dbb, type: 3}
+      propertyPath: Enemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 9181079659430176909, guid: 823016cf5a8014d4aa3b6407e5a92eba, type: 3}
     - target: {fileID: 7697668399986205782, guid: b79f655a30cad044e8c18d560dfe2dbb, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -656,7 +668,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2586423156759364453, guid: 65586635367303f4ba6e890f410231ef, type: 3}
       propertyPath: m_Name
-      value: Canvas
+      value: C_First
       objectReference: {fileID: 0}
     - target: {fileID: 2817699666614519754, guid: 65586635367303f4ba6e890f410231ef, type: 3}
       propertyPath: m_Camera

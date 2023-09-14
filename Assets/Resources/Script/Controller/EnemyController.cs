@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour
     {
         stats.Damage = 25f;
         stats.HP = 50f;
-        stats.Speed = 3f;
+        stats.Speed = 1.5f;
     }
 
     // Start is called before the first frame update
@@ -48,6 +48,5 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 }

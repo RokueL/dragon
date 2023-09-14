@@ -4,9 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using SceneType;
 
 public class sceneManager : MonoBehaviour
 {
+    public Define define = new Define();
+
     public static sceneManager Instance;
 
     public GameObject loadCircle;
@@ -17,6 +20,7 @@ public class sceneManager : MonoBehaviour
     public TextMeshProUGUI progressText;
 
     float time;
+    float loadingTime = 2f;
 
     public void LoadLobbyScene()
     {        
@@ -47,11 +51,11 @@ public class sceneManager : MonoBehaviour
 
                     progressText.text = "·ÎµùÁß... ( " + (operation.progress * 100) + " / 100 )";
 
-                    if (operation.progress >= 0.9f && time >= 3f)
+                    if (operation.progress >= 0.9f && time >= loadingTime)
                     {
                         operation.allowSceneActivation = true;
                     }
-
+                    define.sceneType = Define.SceneType.Lobby;
                     yield return null;
                 }
                 break;
@@ -61,11 +65,11 @@ public class sceneManager : MonoBehaviour
                 {
                     time += Time.deltaTime;
 
-                    if (operation.progress >= 0.9f && time >= 3f)
+                    if (operation.progress >= 0.9f && time >= loadingTime)
                     {
                         operation.allowSceneActivation = true;
                     }
-
+                    define.sceneType = Define.SceneType.Game;
                     yield return null;
                 }
                 break;
@@ -93,8 +97,11 @@ public class sceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(SceneManager.GetActiveScene().name == "FirstScene")
-            BloginButton.onClick.AddListener(LoadLobbyScene);
+        if (SceneManager.GetActiveScene().name == "FirstScene")
+        {
+            loginButton.onClick.AddListener(LoadLobbyScene);
+            define.sceneType = Define.SceneType.First;
+        }
     }
 
     // Update is called once per frame

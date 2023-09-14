@@ -18,6 +18,11 @@ public class BackGround : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        moveBG();
+    }
+
+    void moveBG()
+    {
         if (transform.position.y < mapMinRange)
         {
             transform.position += Vector3.up * mapMaxRange;
@@ -25,7 +30,7 @@ public class BackGround : MonoBehaviour
 
 
         nowPos = transform.position;
-        movePos = Vector3.down * moveSpeed * Time.deltaTime;
+        movePos = Vector3.down * (moveSpeed + GameManager.Instance.gameSpeed) * Time.deltaTime;
         transform.position = nowPos + movePos;
     }
 }

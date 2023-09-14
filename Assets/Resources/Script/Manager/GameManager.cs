@@ -9,10 +9,15 @@ public class GameManager : MonoBehaviour
 
     GameObject meteorLine, meteorPrefab;
 
+    public float gameSpeed;
     float spawnTime;
+    float gameTime;
+
     bool spawnReady, meteorReady;
-    public GameObject[] Enemies = new GameObject[1];
-    public GameObject[] SpawnPoint = new GameObject[4];
+    public bool gameReady;
+
+    public GameObject[] Enemies = new GameObject[2];
+    GameObject[] SpawnPoint = new GameObject[5];
 
 
     private void Awake()
@@ -36,37 +41,51 @@ public class GameManager : MonoBehaviour
 
     #region MAINGAME
     //=======================<   ENEMYSPAWN       >=====================
-    IEnumerator SpawnEnemies()
+    IEnumerator SpawnCoolTime()
     {
         spawnReady = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         spawnReady = true;
     }
+
+    void spawn(int enemytype, int point)
+    {
+        GameObject enemy = Instantiate(Enemies[enemytype], 
+            SpawnPoint[point].transform.position, SpawnPoint[point].transform.rotation);
+        Rigidbody2D rb2 = enemy.GetComponent<Rigidbody2D>();
+        EnemyController enemyLogic = enemy.GetComponent<EnemyController>();
+        rb2.velocity = new Vector2(0, (enemyLogic.stats.Speed + gameSpeed) * (-1));
+    }
+
     void EnemySpawn()
     {
         if (spawnReady)
         {
-            int ranEnemy = Random.Range(0, 1);
             int ranSpawn = Random.Range(0, 4);
-            GameObject enemy = Instantiate(Enemies[ranEnemy], SpawnPoint[ranSpawn].transform.position, SpawnPoint[ranSpawn].transform.rotation);
-            Rigidbody2D rb2 = enemy.GetComponent<Rigidbody2D>();
-            EnemyController enemyLogic = enemy.GetComponent<EnemyController>();
-
-            //얏호 다시 작동한다
-            rb2.velocity = new Vector2(0, enemyLogic.stats.Speed * (-1));
-            StartCoroutine(SpawnEnemies());
+            for(int i = 0; i < 4; i++)
+            {
+                if (i != ranSpawn)
+                {
+                    spawn(0,i);
+                }
+                else
+                {
+                    spawn(1, i);
+                }
+            }
+            StartCoroutine(SpawnCoolTime());
         }
     }
     //=======================<   METEOR       >=========================
-    void MeteorSpawn() //메테오 루트.1
+    void MeteorSpawn() //메테오 루트.1 ------- 코루틴 호출
     {
-        if (meteorReady == true)
+        if (meteorReady == true && gameTime >= 15f)
         {
             StartCoroutine(MeteorReady());
             StartCoroutine(MeteorCoolTime());
         }
     }
-    IEnumerator MeteorReady() // 메테오 루트.2
+    IEnumerator MeteorReady() // 메테오 루트.2 ------ 경고선 소환
     {
         //랜덤 위치 스폰
         int ranSpawn = Random.Range(0, 4); 
@@ -78,17 +97,17 @@ public class GameManager : MonoBehaviour
         MeteorShot(meteor_Line.transform);
         Destroy(meteor_Line);
     }
-    private void MeteorShot(Transform spawn) //메테오 루트.3
+    private void MeteorShot(Transform spawn) //메테오 루트.3 -----메테오 소환
     {
         //메테오에 떨어지는 스크립트 있음
         var meteor = Instantiate(meteorPrefab,
             (spawn.transform.position + new Vector3 (0, 5.5f, 0))
             ,spawn.transform.rotation);
     }
-    IEnumerator MeteorCoolTime() //메테오 루트.4
+    IEnumerator MeteorCoolTime() //메테오 루트.4  -----쿨타임
     {
         meteorReady = false;
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(6f);
         meteorReady = true;
     }
     //==================================================================
@@ -105,8 +124,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        meteorLine = Resources.Load<GameObject>("Prefabs/warn_line");
-        meteorPrefab = Resources.Load<GameObject>("Prefabs/meteor");
+        meteorLine = Resources.Load<GameObject>("Prefabs/object/warn_line");
+        meteorPrefab = Resources.Load<GameObject>("Prefabs/object/meteor");
         spawnReady = true;
         StartCoroutine(MeteorCoolTime() );
     }
@@ -116,15 +135,20 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch(SceneManager.GetActiveScene().name) 
+        switch(sceneManager.Instance.define.sceneType.ToString()) 
         {
-            case "FirstScene":
+            case "First":
                 break;
-            case "LobbyScene":
+            case "Lobby":
                 break;
-            case "GameScene":
-                EnemySpawn();
-                MeteorSpawn();
+            case "Game":
+                if (gameReady)
+                {
+                    EnemySpawn();
+                    MeteorSpawn();
+                    gameSpeed += 0.05f * Time.deltaTime;
+                    gameTime += Time.deltaTime;
+                }
                 break;
         }
 

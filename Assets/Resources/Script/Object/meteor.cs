@@ -11,7 +11,7 @@ public class meteor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stats.Speed = 10f;
+        stats.Speed = 3f;
         stats.Damage = 20f;
 
         rb = GetComponent<Rigidbody2D>();
@@ -20,7 +20,13 @@ public class meteor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rb.velocity = Vector3.down * stats.Speed;
+        float speed = stats.Speed + GameManager.Instance.gameSpeed;
+        if(speed >= 10f)
+        {
+            speed = 10;
+        }
+
+        rb.velocity = Vector3.down * (speed); ;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
