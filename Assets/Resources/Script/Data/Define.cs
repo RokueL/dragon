@@ -17,7 +17,8 @@ namespace SceneType
         public enum Pattern
         {
             EnemySpawn,
-            MeteorRain
+            MeteorRain,
+            FireBreath,
         }
         public Pattern pattern;
     }

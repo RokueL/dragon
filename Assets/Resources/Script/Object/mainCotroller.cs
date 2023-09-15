@@ -1,3 +1,4 @@
+using SceneType;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,12 +20,13 @@ public class mainCotroller : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
         GameManager.Instance.gameReady = true;
-
     }
+
+    
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

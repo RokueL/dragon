@@ -432,6 +432,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: View
       objectReference: {fileID: 0}
+    - target: {fileID: 1803397665552192934, guid: 94d23e7651dbe0f42b3cae0c283669d5, type: 3}
+      propertyPath: m_Name
+      value: IMG_BackGround
+      objectReference: {fileID: 0}
+    - target: {fileID: 2295845982715152131, guid: 94d23e7651dbe0f42b3cae0c283669d5, type: 3}
+      propertyPath: m_Name
+      value: IMG_Character
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409283954507135223, guid: 94d23e7651dbe0f42b3cae0c283669d5, type: 3}
+      propertyPath: m_Name
+      value: IMG_grac
+      objectReference: {fileID: 0}
+    - target: {fileID: 5594887621855733484, guid: 94d23e7651dbe0f42b3cae0c283669d5, type: 3}
+      propertyPath: m_Name
+      value: IMG_Effect
+      objectReference: {fileID: 0}
+    - target: {fileID: 6200970985719625586, guid: 94d23e7651dbe0f42b3cae0c283669d5, type: 3}
+      propertyPath: m_Name
+      value: IMG_logo
+      objectReference: {fileID: 0}
     - target: {fileID: 7458370856468293705, guid: 94d23e7651dbe0f42b3cae0c283669d5, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -582,6 +602,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 300856460653470416, guid: 65586635367303f4ba6e890f410231ef, type: 3}
+      propertyPath: m_Name
+      value: IMG_loadCircle
+      objectReference: {fileID: 0}
     - target: {fileID: 1795364428024043623, guid: 65586635367303f4ba6e890f410231ef, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -670,10 +694,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: C_First
       objectReference: {fileID: 0}
+    - target: {fileID: 2607357941355808371, guid: 65586635367303f4ba6e890f410231ef, type: 3}
+      propertyPath: m_Name
+      value: B_viewButton
+      objectReference: {fileID: 0}
     - target: {fileID: 2817699666614519754, guid: 65586635367303f4ba6e890f410231ef, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 813475051}
+    - target: {fileID: 6099084499465182557, guid: 65586635367303f4ba6e890f410231ef, type: 3}
+      propertyPath: m_Name
+      value: Text_loadingProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 7949677260079726071, guid: 65586635367303f4ba6e890f410231ef, type: 3}
+      propertyPath: m_Name
+      value: Text_touchInfo
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
