@@ -58,22 +58,22 @@ public class EnemyController : MonoBehaviour
         if(ran == 7 || ran == 8)
         {
             ranGem = Random.Range(0, 3);
-            ranX = Random.Range(-0.5f, 0.5f);
-            ranDir = new Vector2(ranX, 1);
+            ranX = Random.Range(-1f, 1f);
+            ranDir = new Vector2(ranX, 2);
             var gem = Instantiate(dropsGem[ranGem],transform.position,transform.rotation);
             gem.gameObject.GetComponent<Rigidbody2D>().AddForce(ranDir, ForceMode2D.Impulse);
         }
         else if( ran == 9)
         {
             ranItem = Random.Range(0, 4);
-            ranX = Random.Range(-0.5f, 0.5f);
-            ranDir = new Vector2(ranX, 1);
+            ranX = Random.Range(-1f, 1f);
+            ranDir = new Vector2(ranX, 2);
             var item = Instantiate(dropsItem[ranItem], transform.position, transform.rotation);
             item.gameObject.GetComponent<Rigidbody2D>().AddForce(ranDir, ForceMode2D.Impulse);
         }
         else
         {
-            ranDir = new Vector2(ranX, 1);
+            ranDir = new Vector2(ranX, 2);
             var coin = Instantiate(dropCoin, transform.position, transform.rotation);
             coin.gameObject.GetComponent<Rigidbody2D>().AddForce(ranDir, ForceMode2D.Impulse);
         }

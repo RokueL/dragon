@@ -19,6 +19,7 @@ namespace SceneType
             EnemySpawn,
             MeteorRain,
             FireBreath,
+            Boss
         }
         public Pattern pattern;
     }

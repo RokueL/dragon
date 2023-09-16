@@ -45,14 +45,14 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        dir = new Vector3(0, -3.21f,0) - transform.position;
+        dir = new Vector3(0, -3.6f,0) - transform.position;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(transform.position.y <= -3.2f)
+        if(transform.position.y <= -3.61f)
         {
             transform.Translate(dir * 1.5f * Time.deltaTime);
         }

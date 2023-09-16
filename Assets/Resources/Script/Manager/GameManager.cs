@@ -12,15 +12,17 @@ public class GameManager : MonoBehaviour
 
     public Define.Pattern define = new Define.Pattern();
 
-    GameObject meteorLine, meteorLineStatic, breathLine, meteorPrefab;
+    GameObject meteorLine, meteorLineStatic, breathLine, meteorPrefab, bossPrefab;
 
     public float gameSpeed;
     float spawnTime;
     float gameTime;
+    float gameDistance;
     float rotationTime;
 
     bool spawnReady, meteorReady, rainReady, rotationReady, breathReady;
     public bool gameReady;
+    public bool bossReady;
 
     public GameObject[] Enemies = new GameObject[2];
     GameObject[] SpawnPoint = new GameObject[5];
@@ -46,6 +48,13 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region MAINGAME
+    //=======================<   BOSS_SPAWN       >=====================
+    void BossSpawn()       // 적 타입 과 스폰 지점을 받아오는 함수
+    {
+        GameObject enemy = Instantiate(bossPrefab,
+            (SpawnPoint[2].transform.position + new Vector3(0, 2f, 0)), 
+            SpawnPoint[2].transform.rotation);
+    }
     //=======================<   BREATH       >=====================
     void breathSpawn()                        //브레스 루트.1 ------- 코루틴 호출
     {
@@ -62,7 +71,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(breathLine);
         var meteor_Line = Instantiate(breathLine,
             (SpawnPoint[ranSpawn].transform.position + new Vector3(0, -5.5f, 0)),
-            SpawnPoint[ranSpawn].transform.rotation);
+            transform.rotation);
         yield return null;
     }
     IEnumerator BreathCoolTime()              //브래스 루트.3  -----쿨타임
@@ -172,34 +181,50 @@ public class GameManager : MonoBehaviour
     void RotationPattern()
     {
         rotationTime += 1 * Time.deltaTime;
-        if (rotationTime >= 10)
+
+        if (rotationTime >= 10 && !bossReady)
         {
             int ran = Random.Range(0, 10);
-            if(ran <= 6)
+            if(ran <= 4)
             {
                 define = (Define.Pattern)0;
             }
-            else if( ran ==7 || ran == 6)
+            else if( ran ==6 || ran == 5)
             {
                 define = (Define.Pattern)1;
             }
-            else if (ran == 8)
+            else if (ran == 7 || ran == 8)
             {
                 define = (Define.Pattern)2;
             }
             else
             {
-                Debug.Log("BOSS");
                 define = (Define.Pattern)2;
             }
             Debug.Log("ran = " + ran);
             rotationTime = 0;
         }
     }
+    void bossCheck()
+    {
+        if (gameDistance >= 30f)
+        {
+            bossReady = true;
+            define = (Define.Pattern)3;
+            BossSpawn();
+            Debug.Log("boss ON");
+            gameDistance = 0;
+        }
+        else
+        {
+            gameDistance += 1 * Time.deltaTime;
+        }
+    }
     void GameLogic()                          //패턴에 따른 이벤트
     {
-        RotationPattern();
         //Debug.Log(define.ToString());
+        bossCheck();
+        RotationPattern();
         switch (define.ToString())
         {
             case "EnemySpawn":
@@ -212,6 +237,9 @@ public class GameManager : MonoBehaviour
             case "FireBreath":
                 breathSpawn();
                 break;
+            case "Boss":
+                Debug.Log("ChangeBool : Boss");
+                break;
         }
     }                   
     #endregion
@@ -222,8 +250,11 @@ public class GameManager : MonoBehaviour
         meteorLine = Resources.Load<GameObject>("Prefabs/object/warn_line");
         meteorLineStatic = Resources.Load<GameObject>("Prefabs/object/warn_line_static");
         breathLine = Resources.Load<GameObject>("Prefabs/object/breath_line");
+        bossPrefab = Resources.Load<GameObject>("Prefabs/Monster/Boss");
 
         spawnReady = true;
+        bossReady = false;
+        gameDistance = 0;
         StartCoroutine(MeteorCoolTime());
     }
 

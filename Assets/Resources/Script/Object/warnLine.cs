@@ -41,7 +41,7 @@ public class warnLine : MonoBehaviour
         else if (states == state.breath)
         {
             var breath = Instantiate(breathPrefab,
-                 (transform.position + new Vector3(0, 5.5f, 0)), transform.rotation);
+                 (transform.position + new Vector3(0.4f, -2.5f, 0)), Quaternion.Euler(0,0,-90f));
             Destroy(this.gameObject);
         }
         else if (states == state.rain)
