@@ -1,10 +1,16 @@
 using SceneType;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class mainCotroller : MonoBehaviour
 {
+    TextMeshPro KillScore;
+    TextMeshPro DistanceScore;
+    TextMeshPro coinScore;
+
 
     // Start is called before the first frame update
     void Start()
