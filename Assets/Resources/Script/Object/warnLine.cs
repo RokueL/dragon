@@ -55,7 +55,7 @@ public class warnLine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (states == state.normal || player.GetComponent<Player>().playerState == Player.PlayerState.Live)
+        if (states == state.normal)
         {
             nowPos = transform.position;
             playerPos = new Vector2(player.transform.position.x, 0);

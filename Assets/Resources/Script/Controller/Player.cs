@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     {
         define.sceneType = sceneManager.Instance.define.sceneType;
 
-        stats.HP = 100f;
+        stats.HP = 3f;
         stats.Speed = 4f;
         stats.Damage = 10f;
 
@@ -97,13 +97,19 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-        if(Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            h = touch.position.x;
-        }
+        //if(Input.touchCount > 0)
+        //{
+        //    Touch touch = Input.GetTouch(0);
+        //    h = touch.position.x;
+        //}
         //화면 밖 넘어가지 않도록
-        if ((touch_Left && h == -2) || (touch_Right && h == 2))
+        //if ((touch_Left && h == -2) || (touch_Right && h == 2))
+        //{
+        //    h = 0;
+        //}
+        h = Input.GetAxisRaw("Horizontal");
+        
+        if ((touch_Left && h == -1) || (touch_Right && h == 1))
         {
             h = 0;
         }
