@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using SceneType;
 using System.Drawing;
-using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 
 public class GameManager : MonoBehaviour
 {
@@ -48,6 +47,29 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region MAINGAME
+    //=======================<   ITEM_USE       >=====================
+    void useMagnet()
+    {
+
+    }
+    void useDoubleShot()
+    {
+
+    }
+    void useDoubleScore()
+    {
+
+    }
+    public void useRush()
+    {
+        StartCoroutine(rush());
+    }
+    IEnumerator rush()
+    {
+        gameSpeed += 10f;
+        yield return new WaitForSeconds(3f);
+        gameSpeed -= 10f;
+    }
     //=======================<   BOSS_SPAWN       >=====================
     void BossSpawn()       // 적 타입 과 스폰 지점을 받아오는 함수
     {
@@ -122,6 +144,7 @@ public class GameManager : MonoBehaviour
             SpawnPoint[point].transform.position, SpawnPoint[point].transform.rotation);
         Rigidbody2D rb2 = enemy.GetComponent<Rigidbody2D>();
         EnemyController enemyLogic = enemy.GetComponent<EnemyController>();
+        enemyLogic.type = enemytype;
         rb2.velocity = new Vector2(0, (enemyLogic.stats.Speed + gameSpeed) * (-1));
     }
     void EnemySpawn()                          // 스폰 준비가 되면 랜덤 포인트 한 곳 제외 일반 드래곤 소환
@@ -160,9 +183,6 @@ public class GameManager : MonoBehaviour
             (SpawnPoint[ranSpawn].transform.position + new Vector3(0, -5.5f, 0)),
             SpawnPoint[ranSpawn].transform.rotation);
         yield return new WaitForSeconds(2f);
-        ////2초후 메테오 소환 후 라인은 그대로 파괴
-        //MeteorShot(meteor_Line.transform);
-        //Destroy(meteor_Line);
     }
     IEnumerator MeteorCoolTime()              //메테오 루트.3  -----쿨타임
     {

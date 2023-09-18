@@ -10,6 +10,13 @@ public class Player : MonoBehaviour
     Stats stats = new Stats();
     Define define = new Define();
 
+    public enum PlayerState
+    {
+        Die,
+        Live
+    }
+    public PlayerState playerState = PlayerState.Live;
+
     float h, delayTime;
 
     Vector3 dir;
@@ -90,11 +97,13 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-        //인풋
-        h = Input.GetAxisRaw("Horizontal");
-
+        if(Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            h = touch.position.x;
+        }
         //화면 밖 넘어가지 않도록
-        if ((touch_Left && h == -1) || (touch_Right && h == 1))
+        if ((touch_Left && h == -2) || (touch_Right && h == 2))
         {
             h = 0;
         }
@@ -112,7 +121,7 @@ public class Player : MonoBehaviour
         stats.HP -= dmg;
         if(stats.HP <= 0)
         {
-            Destroy(this.gameObject);
+            playerState = PlayerState.Die;
         }
     }
 

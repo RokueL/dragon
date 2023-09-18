@@ -13,7 +13,7 @@ public class warnLine : MonoBehaviour
     }
     public state states;
 
-    public GameObject Player;
+    public GameObject player;
     GameObject meteorPrefab, breathPrefab;
     Vector2 playerPos;
     Vector2 nowPos, movePos;
@@ -22,7 +22,7 @@ public class warnLine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Player = GameObject.Find("Player");
+        player = GameObject.Find("Player");
         meteorPrefab = Resources.Load<GameObject>("Prefabs/object/meteor");
         breathPrefab = Resources.Load<GameObject>("Prefabs/object/breath");
 
@@ -55,10 +55,10 @@ public class warnLine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (states == state.normal)
+        if (states == state.normal || player.GetComponent<Player>().playerState == Player.PlayerState.Live)
         {
             nowPos = transform.position;
-            playerPos = new Vector2(Player.transform.position.x, 0);
+            playerPos = new Vector2(player.transform.position.x, 0);
             float dir = playerPos.x - nowPos.x;
             transform.Translate(new Vector2(dir, 0) * moveSpeed * Time.deltaTime);
         }

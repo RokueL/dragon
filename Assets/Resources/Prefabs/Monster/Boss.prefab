@@ -35,7 +35,7 @@ Transform:
   - {fileID: 7024589719668599718}
   - {fileID: 8941298182373878127}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8791464345082959425
 MonoBehaviour:
@@ -49,6 +49,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f675931bb33e6a4a8a93d54955143bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitSpBody:
+  - {fileID: 1018308836, guid: 8e588fe9ee226d844aa8a8f9610f8859, type: 3}
+  - {fileID: 86058195, guid: f720414991418214d88cbacc56911682, type: 3}
+  hitSpArm:
+  - {fileID: 1290983780, guid: 8e588fe9ee226d844aa8a8f9610f8859, type: 3}
+  - {fileID: -245154868, guid: f720414991418214d88cbacc56911682, type: 3}
   firePos: {fileID: 2544429384626704730}
 --- !u!61 &-6775934396569062059
 BoxCollider2D:
@@ -164,7 +170,7 @@ GameObject:
   - component: {fileID: 3777480348527062264}
   - component: {fileID: 763682305276172936}
   m_Layer: 0
-  m_Name: cragon_03_0
+  m_Name: armL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -314,7 +320,7 @@ GameObject:
   - component: {fileID: 840770685368783520}
   - component: {fileID: 6359125754889132345}
   m_Layer: 0
-  m_Name: cragon_03_2
+  m_Name: bodyL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -398,7 +404,7 @@ GameObject:
   - component: {fileID: 8535860034139198877}
   - component: {fileID: 5081128730814439724}
   m_Layer: 0
-  m_Name: cragon_03_0 (1)
+  m_Name: armR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -482,7 +488,7 @@ GameObject:
   - component: {fileID: 7043663950266528323}
   - component: {fileID: 1304590983305150729}
   m_Layer: 0
-  m_Name: cragon_03_2 (1)
+  m_Name: bodyR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

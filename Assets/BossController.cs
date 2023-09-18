@@ -14,6 +14,12 @@ public class BossController : MonoBehaviour
     GameObject[] dropsGem = new GameObject[3];
     GameObject[] dropsItem = new GameObject[4];
 
+    SpriteRenderer[] spBody = new SpriteRenderer[2];
+    SpriteRenderer[] spArm = new SpriteRenderer[2];
+
+    public Sprite[] hitSpBody = new Sprite[2];
+    public Sprite[] hitSpArm = new Sprite[2];
+
     enum Pattern
     {
         BulletShot,
@@ -56,7 +62,10 @@ public class BossController : MonoBehaviour
         {
             dropsItem[i] = Resources.Load<GameObject>("Prefabs/Object/item_special" + i);
         }
-
+        spBody[0] = GameObject.Find("bodyL").GetComponent<SpriteRenderer>();
+        spBody[1] = GameObject.Find("bodyR").GetComponent<SpriteRenderer>();
+        spArm[0] = GameObject.Find("armL").GetComponent<SpriteRenderer>();
+        spArm[1] = GameObject.Find("armR").GetComponent<SpriteRenderer>();
 
         dir = new Vector3(0, 3.9f, 0) - transform.position;
     }
@@ -141,11 +150,25 @@ public class BossController : MonoBehaviour
 
     void OnHit(float dmg)
     {
+        StartCoroutine(hitSp());
         stats.HP -= dmg;
         if (stats.HP <= 0)
         {
             OnDie();
         }
+    }
+
+    IEnumerator hitSp()
+    {
+        spBody[0].sprite = hitSpBody[1];
+        spBody[1].sprite = hitSpBody[1];
+        spArm[0].sprite = hitSpArm[1];
+        spArm[1].sprite = hitSpArm[1];
+        yield return new WaitForSeconds(0.1f);
+        spBody[0].sprite = hitSpBody[0];
+        spBody[1].sprite = hitSpBody[0];
+        spArm[0].sprite = hitSpArm[0];
+        spArm[1].sprite = hitSpArm[0];
     }
 
     void OnDie()
