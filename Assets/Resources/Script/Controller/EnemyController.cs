@@ -14,6 +14,7 @@ public class EnemyController : MonoBehaviour
     GameObject dropCoin;
     GameObject[] dropsGem = new GameObject[3];
     GameObject[] dropsItem = new GameObject[4];
+    Rigidbody2D rb2;
 
     int ranGem, ranItem;
     float ranX;
@@ -29,6 +30,9 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        float gamespeed = GameManager.Instance.gameSpeed;
+        rb2 = this.gameObject.GetComponent<Rigidbody2D>();
+        rb2.velocity = new Vector2(0, (stats.Speed + gamespeed) * (-1));
         spriteRenderer = GetComponent<SpriteRenderer>();
         deadEffect = Resources.Load<GameObject>("Prefabs/Object/smoke");
         dropCoin = Resources.Load<GameObject>("Prefabs/Object/item_coin");
@@ -57,7 +61,7 @@ public class EnemyController : MonoBehaviour
 
     void ranDrop()
     {
-        int ran = Random.Range(0, 30);
+        int ran = Random.Range(0, 20);
         if(ran == 8)
         {
             ranGem = Random.Range(0, 3);
@@ -83,7 +87,7 @@ public class EnemyController : MonoBehaviour
             ranItem = Random.Range(0, 4);
             ranX = Random.Range(-1f, 1f);
             ranDir = new Vector2(ranX, 2);
-            var items = Instantiate(dropsItem[ranItem], transform.position, transform.rotation);
+            var items = Instantiate(dropsItem[1], transform.position, transform.rotation);
             if (ranItem == 0)
             {
                 items.GetComponent<item>().itemType = item.ItemType.item_Magnet;

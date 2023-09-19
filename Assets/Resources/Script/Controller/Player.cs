@@ -7,7 +7,7 @@ using Datas; //체력을 가진 오브젝트들 스탯
 
 public class Player : MonoBehaviour
 {
-    Stats stats = new Stats();
+    public Stats stats = new Stats();
     Define define = new Define();
 
     public enum PlayerState
@@ -113,12 +113,14 @@ public class Player : MonoBehaviour
         {
             h = 0;
         }
-
-        //현재 위치 + 다음 위치 계산 하여 이동
-        nowPos = transform.position;
-        movePos = new Vector3(h,0,0) * stats.Speed * Time.deltaTime;
-        transform.position = nowPos + movePos;
-        AutoFire();
+        if (playerState == PlayerState.Live)
+        {
+            //현재 위치 + 다음 위치 계산 하여 이동
+            nowPos = transform.position;
+            movePos = new Vector3(h, 0, 0) * stats.Speed * Time.deltaTime;
+            transform.position = nowPos + movePos;
+            AutoFire();
+        }
 
     }
 
@@ -144,12 +146,17 @@ public class Player : MonoBehaviour
                     touch_Right = true;
                     break;
             }
-        }
+        } 
 
-        if(collision.gameObject.tag == "Meteor")
+        if (collision.gameObject.tag == "Meteor")
         {
             meteor meteo = collision.GetComponent<meteor>();
             OnHit(meteo.stats.Damage);
+            Debug.Log("HIT");
+        }
+        if (collision.gameObject.tag == "Enemy")
+        {
+            OnHit(1);
             Debug.Log("HIT");
         }
     }

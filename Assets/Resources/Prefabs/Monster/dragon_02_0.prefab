@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -1735514414631402982}
   m_Layer: 0
   m_Name: dragon_02_0
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -171,3 +171,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4d6cfc83198224bb4bf5e3773481d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0

@@ -31,6 +31,11 @@ public class sceneManager : MonoBehaviour
         StartCoroutine(LoadAsynSceneCoroutine("LobbyScene"));
     }
 
+    public void LoadLobbySceneInGame()
+    {
+        StartCoroutine(LoadAsynSceneCoroutine("LobbyScene"));
+    }
+
     public void LoadGameScene()
     {
         StartCoroutine(LoadAsynSceneCoroutine("GameScene"));
@@ -92,6 +97,10 @@ public class sceneManager : MonoBehaviour
     public void GameButtonSetup(Button button)
     {
         button.onClick.AddListener(LoadGameScene);
+    }
+    public void LobbyButtonSetup(Button button)
+    {
+        button.onClick.AddListener(LoadLobbySceneInGame);
     }
 
     // Start is called before the first frame update

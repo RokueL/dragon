@@ -26,6 +26,17 @@ public class GameManager : MonoBehaviour
     public GameObject[] Enemies = new GameObject[2];
     GameObject[] SpawnPoint = new GameObject[5];
 
+    public void gameStart()
+    {
+        spawnTime = 0;
+        gameDistance = 0;
+        gameSpeed = 0;
+        gameTime = 0;
+        rotationTime = 0;
+        spawnReady = true;
+        bossReady = false;
+        StartCoroutine(MeteorCoolTime());
+    }
 
     private void Awake()
     {

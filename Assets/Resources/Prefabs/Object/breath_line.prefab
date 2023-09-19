@@ -115,4 +115,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   states: 2
-  Player: {fileID: 0}
+  player: {fileID: 0}
